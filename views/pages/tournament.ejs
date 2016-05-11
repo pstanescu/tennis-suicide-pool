@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tennis Suicide Pool</title>
+  <% include ../partials/head %>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <main>
+      <h1><%= tournament.tournamentName %>
+        <%= tournament.tournamentYear %>
+      </h1>
+
+      <% tournament.draws.forEach(function(draw,i) {%>
+        <div id="scoresDrawTableContent" class="scores-draw-table-content">
+          <a href="#" onclick="toggle_visibility('<%= draw.drawGender%>_<%=draw.drawType%>');">
+  	      <span><%= draw.drawGender %></span>
+  	      <span><%= draw.drawType %></span>
+  	      <span>(draw size: <%= draw.size %>)</span>
+          <div id="<%= draw.drawGender%>_<%=draw.drawType%>"></a>
+            <div class="scores-draw-table-wrapper">
+              <table id=scoresDrawTable class="scores-draw-table">
+                <thead>
+                  <tr>
+                    <% draw.rounds.forEach(function(round) {%>
+                    <th><span><%= round.roundName %></span></th>
+                    <%})%>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <% draw.rounds.forEach(function(round,j) {%>
+                      <% var roundCnt = 0 %>
+                      <% var height=88 * round.seq%>
+                    <td rowspan="<%=round.seq - 1%>" class="score-draw-entry-box-wrapper" style="height:<%=height%>px">
+                      <div class="scores-draw-entry-box">
+                        <% round.matches.forEach(function(match,k) {%>
+                        <table class="scores-draw-entry-box-table">
+                          <tbody>
+                            <%  match.participants.forEach(function(participant,l) {%>
+                            <tr>
+                              <td>
+                                <%= participant.playerName %>
+                                <% if (round.active) { %>
+                                  <form action="/tournament/vote" method="post">
+                                    <input type="hidden" name="id" value="<%=tournament._id%>">
+                                    <input type="hidden" name="drawIndex" value="<%=i%>">
+                                    <input type="hidden" name="roundIndex" value="<%=j%>">
+                                    <input type="hidden" name="matchIndex" value="<%=k%>">
+                                    <input type="hidden" name="participantIndex" value="<%=l%>">
+                                    <button class="badge" role="link" type="submit" name="sendVote" value="sendVote"> vote</button>
+                                  </form>
+                                <% } %>
+                                <% if (participant.voters) {%>
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#<%=match.order%>_<%=l%>_voters"><span class="badge"><%=participant.voters.length %></span> voters</button>
+                      					<div class="modal fade" id="<%=match.order%>_<%=l%>_voters" role="dialog">
+                                  <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h3 class="modal-title">Player votes</h3>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="list-group">
+                                          <% participant.voters.forEach(function(voter) {%>
+                      					            <a href="/profile/:email" class="btn btn-info list-group-item" role="button"><%= voter.voterName %></a>
+                                          <% }) %>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <% } %>
+                              </td>
+                            </tr>
+                            <% }) %>
+                          </tbody>
+                        </table>
+                        <% }) %>
+                      </div>
+                    </td>
+                    <% }) %>
+                  </tr>
+                </tbody>
+        	    </table>
+            </div>
+          </div>
+        <% }) %>
+      </main>
+    </div>
+<!--
+<form action="/tournaments" method="POST">
+    <input type="text" placeholder="tournamentName" name="tournamentName">
+    <input type="text" placeholder="tournamentYear" name="tournamentYear">
+    <button type="submit">Submit</button>
+  </form>
+-->
+</body>
+</html>

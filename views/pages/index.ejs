@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tennis Suicide Pool</title>
+  <% include ../partials/head %>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <% include ../partials/header %>
+    </header>
+
+    <main>
+
+      <% tournaments.forEach(function(tournament) {%>
+        <a href="/tournament/<%= tournament._id %>" >
+          <h1>
+            <span><%= tournament.tournamentName %></span>
+            <span><%= tournament.tournamentYear %></span>
+          </h1>
+        </a>
+
+    <% }); %>
+    </main>
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
+  </div>
+</body>
+</html>

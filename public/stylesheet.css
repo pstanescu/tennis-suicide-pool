@@ -1,0 +1,21 @@
+body {padding-top:50px;}
+.draw > div {
+  display:none;
+}
+.round > .match {
+  display:none;
+}
+
+.drop, .drop ul {padding: 0; margin: 0; list-style: none;}
+.drop a {display: inline; width: 170px;}
+.drop li {float: left; padding: 0px 8px 2px 0px;}  /* all list items */
+.drop li ul {position: absolute; background: #FFFFFF;
+  padding: 0px 0px 0px 4px; width: 170px; left: -9999px;} /* second-level lists */
+.drop li:hover ul {left: auto; } /* nest list under hovered list items */
+.drop li ul li a {color: #ffffff; text-decoration: none; display: block;}
+.drop li ul li a:hover {color: yellow; background:#663399;}
+
+
+#voters .modal-dialog  {
+  width:25%;
+}

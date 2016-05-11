@@ -1,0 +1,20 @@
+<div class="page-header">
+	<nav class="navbar navbar-default navbar-fixed-top">
+  	<div class="container">
+			<div class="pull-left">
+				<a href="/">Home</a>
+			</div>
+			<!--<div class="col-sm-2 pull-right col-sm-offset-2">-->
+			<div class="pull-right">
+				<% if (!user) { %>
+					<a href="/login" class="btn btn-default"><span class="fa fa-sign-in"></span> Login</a>
+					<a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Signup</a>
+				<% } %>
+				<% if (user) { %>
+					<a href="/profile" class="btn btn-default"><span class="fa fa-user"></span> Profile</a>
+					<a href="/logout" class="btn btn-default"><span class="fa fa-sign-out"></span> Logout</a>
+				<% } %>
+			</div>
+		</div>
+	</nav>
+</div>
